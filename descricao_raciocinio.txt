@@ -1,0 +1,33 @@
+===================================================================
+Descrição do Raciocínio Técnico - Gerador de Perguntas Automáticas
+===================================================================
+
+1. Visão do Produto e Adequação ao Contexto do grupoQ
+-------------------------------------------------------
+A solução é um script Python que automatiza a criação de perguntas de múltipla escolha a partir de um texto educacional. O objetivo é fornecer uma ferramenta de apoio para educadores e criadores de conteúdo do grupoQ, alinhando-se à missão da empresa de utilizar tecnologia para otimizar e escalar a produção de materiais pedagógicos de alta qualidade. A ferramenta ataca uma dor real: a criação de quizzes e materiais de revisão, que é uma tarefa demorada e repetitiva.
+
+2. Arquitetura da Solução e Decisões Técnicas
+--------------------------------------------------
+Para garantir a qualidade, manutenibilidade e escalabilidade do projeto, foi adotada uma arquitetura modularizada, mesmo para um escopo inicial simples. A decisão de não manter todo o código em um único script foi estratégica para demonstrar boas práticas de engenharia de software.
+
+A estrutura segue o princípio da Separação de Responsabilidades (SoC):
+
+* `gerador_perguntas.py`: Atua como a camada de orquestração (ou "ponto de entrada"). Sua única função é controlar o fluxo da aplicação: carregar configurações, chamar os serviços necessários e apresentar os resultados. Ele não sabe *como* a IA funciona ou *como* os arquivos são lidos.
+
+* `core/ai_generator.py`: É o cérebro da aplicação, a camada de serviço. Encapsula toda a lógica de comunicação com a API do Google Generative AI em uma classe `AIGenerator`. Se o modelo de IA ou o provedor (ex: OpenAI) precisar ser trocado no futuro, apenas este arquivo será modificado.
+
+* `utils/file_handler.py`: Uma camada de utilitários, responsável exclusivamente por interações com o sistema de arquivos (ler e salvar texto). Isso isola o código de I/O (Entrada/Saída).
+
+* `prompts.py`: Isola o "prompt" (a instrução enviada à IA) do código de lógica. Essa é uma prática essencial de "Prompt Engineering", permitindo que o prompt seja ajustado e otimizado sem alterar o código funcional.
+
+A decisão técnica mais importante foi instruir a IA a retornar sua resposta em formato JSON. Isso cria um "contrato de dados" robusto entre o script e a IA, eliminando a necessidade de técnicas frágeis de extração de texto e tornando o processamento da resposta determinístico e confiável.
+
+3. Potencial de Escalabilidade
+-------------------------------
+A arquitetura modular é a base para a escalabilidade da solução.
+
+* **Escalabilidade Funcional:** Adicionar novas funcionalidades é trivial. Para gerar resumos, por exemplo, bastaria adicionar um novo método na classe `AIGenerator` e um novo prompt em `prompts.py`, sem impactar o código existente. O mesmo vale para suportar novos formatos de entrada (PDFs, URLs), que seriam adicionados em `utils/file_handler.py`.
+
+* **Escalabilidade Técnica:** O uso de uma API em nuvem já é inerentemente escalável. A estrutura componentizada permite que esta solução evolua facilmente de um script para uma API web (usando Flask ou FastAPI), onde o `AIGenerator` se tornaria o "coração" de um microsserviço que poderia ser integrado diretamente à plataforma do grupoQ.
+
+Este projeto foi construído não apenas para funcionar, mas para evoluir com qualidade.
