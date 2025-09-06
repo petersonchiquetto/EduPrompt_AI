@@ -1,76 +1,131 @@
-# Gerador de Perguntas Automáticas (Teste Técnico - AI Team) - Peterson Rafael Chiquetto de Camargo
+# 🤖 Automatic Question Generator
 
-Este projeto é uma solução de software desenvolvida como parte do teste técnico para a equipe de Inteligência Artificial do GrupoQ. A aplicação analisa um trecho de texto educacional e gera automaticamente perguntas de múltipla escolha para auxiliar na revisão de conteúdo por parte dos alunos.
+**An AI Engineering Project by Peterson Rafael Chiquetto de Camargo**
+
+[![Python](https://img.shields.io/badge/Python-3.11%2B-blue?logo=python\&logoColor=white)](https://www.python.org/)
+[![Google Generative AI](https://img.shields.io/badge/Google%20AI-gemini--1.5--flash--latest-red?logo=google\&logoColor=white)](https://ai.google.dev/)
+[![Status](https://img.shields.io/badge/Status-Active-brightgreen)]()
+[![License](https://img.shields.io/badge/License-MIT-lightgrey)]()
+
+This project is an **AI Engineering solution** built to demonstrate how **Generative AI** can transform **educational technology (EdTech)**.
+It processes an **educational text** and automatically generates **multiple-choice questions**, supporting students with interactive study and active recall.
 
 ---
 
-## Arquitetura do Projeto
+## 🧩 System Overview
 
-Para garantir a qualidade, manutenibilidade e escalabilidade, o projeto foi desenvolvido com uma arquitetura modular, seguindo o princípio da **Separação de Responsabilidades (SoC)**.
+The application is designed with **clean architecture** and **separation of concerns**, ensuring maintainability, scalability, and extensibility.
 
 ```
-(Estrutura de Pastas do Projeto)
+📂 Project Structure
 ├── core/
-│   └── ai_generator.py      # Módulo principal da IA.
+│   └── ai_generator.py      # Main AI service module
 ├── utils/
-│   └── file_handler.py      # Módulo utilitário para arquivos.
-├── gerador_perguntas.py     # Ponto de entrada (orquestrador) da aplicação.
-├── prompts.py               # Armazena os templates de prompts para a IA.
-├── requirements.txt         # Lista de dependências do projeto.
-└── .env.example             # Arquivo de exemplo para as variáveis de ambiente.
+│   └── file_handler.py      # File management utilities
+├── question_generator.py    # Application entry point (orchestrator)
+├── prompts.py               # Centralized AI prompt templates
+├── requirements.txt         # Project dependencies
+└── .env.example             # Example environment variables
 ```
 
-- **`gerador_perguntas.py`**: Orquestra o fluxo da aplicação.
-- **`core/ai_generator.py`**: Camada de serviço que lida com toda a comunicação com a API do Google Generative AI.
-- **`utils/file_handler.py`**: Camada de utilitários responsável por interações com o sistema de arquivos.
-- **`prompts.py`**: Isola as instruções enviadas à IA, facilitando a manutenção e o ajuste fino (Prompt Engineering).
+---
+
+## 📊 Flow Diagram
+
+```mermaid
+flowchart TD
+    A[📄 Input Educational Text] --> B[⚙️ AI Prompt Templates]
+    B --> C[🤖 Google Generative AI API]
+    C --> D[📝 Generated Multiple-Choice Questions]
+    D --> E[💻 Display in Terminal]
+    D --> F[📂 Save to questions_output.txt]
+```
 
 ---
 
-## Tecnologias Utilizadas
+## ⚙️ Tech Stack
 
-- **Python 3.11+**
-- **Google Generative AI API** (com o modelo `gemini-1.5-flash-latest`)
-- **Bibliotecas**: `google-generativeai`, `python-dotenv`
+* 🐍 **Python 3.11+**
+* 🌐 **Google Generative AI API** (`gemini-1.5-flash-latest`)
+* 📦 **Libraries**: `google-generativeai`, `python-dotenv`
 
 ---
 
-## Como Configurar e Executar o Projeto
+## 🚀 Getting Started
 
-Siga os passos abaixo para executar a aplicação.
+### 1️⃣ Extract the Project
 
-**1. Descompacte o Projeto**
-   - Extraia o conteúdo do arquivo `.zip` para uma pasta de sua preferência no seu computador.
+Unzip the files into a folder of your choice.
 
-**2. Abra um Terminal na Pasta do Projeto**
-   - Navegue através do seu terminal (PowerShell, CMD, etc.) até a pasta que você acabou de extrair.
+### 2️⃣ Open a Terminal
 
-**3. Crie e Ative um Ambiente Virtual**
-   - É uma boa prática isolar as dependências do projeto.
-   ```bash
-   # Criar o ambiente virtual
-   python -m venv venv
+Navigate to the project folder via PowerShell, CMD, or your preferred terminal.
 
-   # Ativar no Windows (PowerShell)
-   .\venv\Scripts\Activate.ps1
-   ```
+### 3️⃣ Create & Activate Virtual Environment
 
-**4. Instale as Dependências**
-   - Com o ambiente virtual ativado, instale as bibliotecas listadas no arquivo `requirements.txt`:
-   ```bash
-   pip install -r requirements.txt
-   ```
+```bash
+# Create virtual environment
+python -m venv venv
 
-**5. Configure sua Chave de API (Passo Essencial)**
-   - Este projeto necessita de uma chave de API do Google AI Studio para funcionar.
-   - Na pasta do projeto, você encontrará um arquivo chamado **`.env.example`**.
-   - **Copie este arquivo e renomeie a cópia para `.env`**.
-   - Abra o novo arquivo `.env` e substitua o valor `SUA_CHAVE_DE_API_VEM_AQUI` pela sua chave de API pessoal e válida.
+# Activate (Windows PowerShell)
+.\venv\Scripts\Activate.ps1
+```
 
-**6. Execute a Aplicação**
-   - Agora, com tudo configurado, execute o script principal:
-   ```bash
-   python gerador_perguntas.py
-   ```
+### 4️⃣ Install Dependencies
 
-O script irá ler o arquivo `texto_aula.txt`, gerar as perguntas, exibi-las no terminal e salvar o resultado final no arquivo `saida_perguntas.txt`, que será criado na mesma pasta.
+```bash
+pip install -r requirements.txt
+```
+
+### 5️⃣ Configure Environment Variables
+
+* Get a valid **Google AI Studio API Key**.
+* Copy **`.env.example`** → rename it to **`.env`**.
+* Replace `YOUR_API_KEY_HERE` with your real key.
+
+### 6️⃣ Run the Application
+
+```bash
+python question_generator.py
+```
+
+The app will:
+✔️ Read the input text (`lesson_text.txt`)
+✔️ Generate multiple-choice questions
+✔️ Display them in the terminal
+✔️ Save results to (`questions_output.txt`)
+
+---
+
+## 🧠 Why This Project Matters
+
+This project demonstrates core principles of **AI Engineering** applied to **EdTech**:
+
+* 🏛️ **Clean & Modular Architecture** → Easy to maintain and extend.
+* 🎯 **Applied Generative AI** → Effective use of prompt engineering for NLP tasks.
+* 📚 **Education-Oriented** → Automates question creation, enhancing teaching and learning.
+
+---
+
+## 🛠️ Roadmap
+
+Here are potential improvements and next steps to expand this project:
+
+* [ ] 🌐 **Web Interface**: Build a simple front-end for uploading text and visualizing questions in real time.
+* [ ] 📊 **Question Export**: Export generated questions to Google Forms, PDF, or CSV formats.
+* [ ] 🎨 **Question Types**: Extend beyond multiple-choice to include true/false, short answer, and essay-style questions.
+* [ ] 🧩 **LMS Integration**: Integrate with Learning Management Systems (e.g., Moodle, Canvas).
+* [ ] ⚡ **Batch Processing**: Support multiple documents at once with bulk question generation.
+* [ ] 🧪 **Evaluation Metrics**: Add AI-driven scoring to assess question quality and difficulty levels.
+
+---
+
+## 🌍 Use Cases
+
+This project can be applied to several real-world contexts:
+
+* 👩‍🏫 **Teachers & Schools**: Automate quiz creation to save time and diversify assessments.
+* 📱 **EdTech Platforms**: Integrate AI-powered question generation to enhance interactive learning.
+* 🏢 **Corporate Training**: Generate evaluation material for workshops, onboarding, and compliance training.
+* 🎓 **Self-Learners & Students**: Use as a personal study assistant for active recall and revision.
+* 📚 **Publishing & Content Creators**: Enhance e-books and online courses with automatically generated practice questions.
